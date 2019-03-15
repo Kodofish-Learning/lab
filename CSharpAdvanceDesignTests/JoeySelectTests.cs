@@ -29,10 +29,14 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
         {
+            var list = new List<string>();
             foreach (var url in urls)
             {
-                yield return url.Replace("http:", "https:");
+                
+               list.Add(url.Replace("http:", "https:"));
             }
+
+            return list;
         }
 
         private static IEnumerable<string> GetUrls()

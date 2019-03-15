@@ -18,21 +18,18 @@ namespace Lab.Extensions
 
         }
         
-        public static List<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, int, bool> predict)
+        public static IEnumerable<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, int, bool> predict)
         {
-            var list = new List<TSource>();
             var index = 0;
             foreach (var product in source)
             {
                 if (predict(product,index))
                 {
-                    list.Add(product);
+                    yield return product;
                 }
 
                 index++;
             }
-
-            return list;
         }
 
         public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, TResult> mapper)

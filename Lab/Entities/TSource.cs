@@ -1,6 +1,6 @@
 ﻿namespace Lab.Entities
 {
-    public class Product
+    public class TSource
     {
         public int Id { get; set; }
         public int Price { get; set; }

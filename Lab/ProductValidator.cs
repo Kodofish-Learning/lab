@@ -2,9 +2,9 @@
 
 namespace Lab
 {
-    public class ProductValidator : IValidator<Product>
+    public class ProductValidator : IValidator<TSource>
     {
-        public bool Validate(Product model)
+        public bool Validate(TSource model)
         {
             return model.Price - model.Cost >= 0;
         }

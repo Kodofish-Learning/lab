@@ -17,7 +17,7 @@ namespace CSharpAdvanceDesignTests
 
             var arguments = new Dictionary<string, object>
             {
-                {"model", new Product {Price = 100, Cost = 111}},
+                {"model", new TSource {Price = 100, Cost = 111}},
                 {"validator", new ProductValidator()},
             };
 

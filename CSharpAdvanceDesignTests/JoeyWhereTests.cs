@@ -16,25 +16,25 @@ namespace CSharpAdvanceDesignTests
         [Test]
         public void find_products_that_price_between_200_and_500()
         {
-            var products = new List<Product>
+            var products = new List<TSource>
             {
-                new Product {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
-                new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
-                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
-                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
-                new Product {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
-                new Product {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
-                new Product {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
-                new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
+                new TSource {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
+                new TSource {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
+                new TSource {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new TSource {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
+                new TSource {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
+                new TSource {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
+                new TSource {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
+                new TSource {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
             var actual = products.FishWhere(product => product.Price >200 && product.Price < 500);
 
-            var expected = new List<Product>
+            var expected = new List<TSource>
             {
-                new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
-                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
-                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"}
+                new TSource {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
+                new TSource {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new TSource {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"}
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
@@ -43,16 +43,16 @@ namespace CSharpAdvanceDesignTests
         [Test]
         public void group_and_sum()
         {
-            var products = new List<Product>
+            var products = new List<TSource>
             {
-                new Product {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
-                new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
-                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
-                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
-                new Product {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
-                new Product {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
-                new Product {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
-                new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
+                new TSource {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
+                new TSource {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
+                new TSource {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new TSource {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
+                new TSource {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
+                new TSource {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
+                new TSource {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
+                new TSource {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
             var actual = FishGroupSum(products, 3, it => it.Cost);
@@ -61,7 +61,7 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual); 
         }
 
-        private IEnumerable<int> FishGroupSum(IEnumerable<Product> products, int groupSize, Func<Product, int> selector)
+        private IEnumerable<int> FishGroupSum(IEnumerable<TSource> products, int groupSize, Func<TSource, int> selector)
         {
             var count = groupSize;
             var index = 0;
@@ -78,24 +78,24 @@ namespace CSharpAdvanceDesignTests
         [Test]
         public void find_products_that_price_between_200_and_500_and_cost_more_than_30()
         {
-            var products = new List<Product>
+            var products = new List<TSource>
             {
-                new Product {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
-                new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
-                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
-                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
-                new Product {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
-                new Product {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
-                new Product {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
-                new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
+                new TSource {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
+                new TSource {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
+                new TSource {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new TSource {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
+                new TSource {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
+                new TSource {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
+                new TSource {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
+                new TSource {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
             var actual = products.FishWhere(product => product.Price>200 && product.Price<500 && product.Cost > 30);
 
-            var expected = new List<Product>
+            var expected = new List<TSource>
             {
-                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
-                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"}
+                new TSource {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new TSource {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"}
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
@@ -104,16 +104,16 @@ namespace CSharpAdvanceDesignTests
         [Test]
         public void find_products_that_price_between_200_and_500_and_cost_more_than_30_use_IEnumerable()
         {
-            var products = new List<Product>
+            var products = new List<TSource>
             {
-                new Product {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
-                new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
-                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
-                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
-                new Product {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
-                new Product {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
-                new Product {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
-                new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
+                new TSource {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
+                new TSource {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
+                new TSource {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new TSource {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
+                new TSource {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
+                new TSource {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
+                new TSource {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
+                new TSource {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
             var actual = products

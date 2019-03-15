@@ -110,6 +110,21 @@ namespace Lab.Extensions
 
             return true;
         }
+
+        public static bool JoeyAny(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
+        {
+            var source = enumerable.GetEnumerator();
+            while (source.MoveNext())
+            {
+                var item = source.Current;
+                if (predicate(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
     
 }

@@ -7,7 +7,6 @@ using System.Linq;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyTakeWhileTests
     {
         [Test]
@@ -24,6 +23,7 @@ namespace CSharpAdvanceDesignTests
             };
 
             var actual = JoeyTakeWhile(cards);
+//            var actual = cards.TakeWhile(it => it.Kind != CardKind.Separate);
 
             var expected = new List<Card>
             {
@@ -37,7 +37,14 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Card> JoeyTakeWhile(IEnumerable<Card> cards)
         {
-            throw new System.NotImplementedException();
+            foreach (var card in cards)
+            {
+                if (card.Kind != CardKind.Separate) yield return card;
+                else
+                {
+                    yield break;
+                }
+            }
         }
     }
 }

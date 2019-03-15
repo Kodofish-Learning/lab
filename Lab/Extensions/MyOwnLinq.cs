@@ -78,6 +78,16 @@ namespace Lab.Extensions
                 if (++index == count) break;
             }
         }
+
+        public static IEnumerable<Employee> JoeySkip(this IEnumerable<Employee> employees, int count)
+        {
+            var source = employees.GetEnumerator();
+            var index = 0;
+            while (source.MoveNext())
+            {
+                if (index++ >= count) yield return source.Current;
+            }
+        }
     }
     
 }

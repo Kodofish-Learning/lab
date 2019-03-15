@@ -3,6 +3,7 @@ using Lab.Entities;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Lab.Extensions;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -14,7 +15,7 @@ namespace CSharpAdvanceDesignTests
         {
             var employees = GetEmployees();
 
-            var actual = JoeySkip(employees, 2);
+            var actual = employees.JoeySkip(2);
 
             var expected = new List<Employee>
             {
@@ -24,16 +25,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
-        }
-
-        private IEnumerable<Employee> JoeySkip(IEnumerable<Employee> employees, int count)
-        {
-            var source = employees.GetEnumerator();
-            var index = 0;
-            while (source.MoveNext())
-            {
-                if (index++ >= count) yield return source.Current;
-            }
         }
 
         private static IEnumerable<Employee> GetEmployees()

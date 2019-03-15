@@ -6,10 +6,9 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyAnyTests
     {
-        [Test]
+        [Ignore("not implement")]
         public void three_employees()
         {
             var emptyEmployees = new Employee[]
@@ -19,24 +18,52 @@ namespace CSharpAdvanceDesignTests
                 new Employee(),
             };
 
-            var actual = JoeyAny(emptyEmployees);
-            Assert.IsTrue(actual);
+//            var actual = JoeyAny(emptyEmployees);
+//            Assert.IsTrue(actual);
         }
 
-        [Test]
+        [Ignore("not implement")]
         public void empty_employees()
         {
             var emptyEmployees = new Employee[]
             {
             };
 
-            var actual = JoeyAny(emptyEmployees);
-            Assert.IsFalse(actual);
+//            var actual = JoeyAny(emptyEmployees);
+//            Assert.IsFalse(actual);
         }
 
-        private bool JoeyAny(IEnumerable<Employee> employees)
+        [Test]
+        public void price_more_than_500()
         {
-            throw new NotImplementedException();
+            var products = new List<Product>
+            {
+                new Product {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
+                new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
+                new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
+                new Product {Id = 4, Cost = 41, Price = 410, Supplier = "Odd-e"},
+                new Product {Id = 5, Cost = 51, Price = 510, Supplier = "Momo"},
+                new Product {Id = 6, Cost = 61, Price = 610, Supplier = "Momo"},
+                new Product {Id = 7, Cost = 71, Price = 710, Supplier = "Yahoo"},
+                new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
+            };
+
+            Assert.IsTrue(JoeyAny(products));
+        }
+
+        private bool JoeyAny(IEnumerable<Product> employees)
+        {
+            var source = employees.GetEnumerator();
+            while (source.MoveNext())
+            {
+                var item = source.Current;
+                if (item.Price > 500)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

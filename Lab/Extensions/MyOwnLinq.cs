@@ -37,6 +37,30 @@ namespace Lab.Extensions
             return list;
         }
 
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, TResult> mapper)
+        {
+            var list = new List<TResult>();
+            foreach (var url in urls)
+            {
+                
+                list.Add(mapper(url));
+            }
+
+            return list;
+        }
+
+        public static IEnumerable<TResult> JoeySelectWithIndex<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, int, TResult> selector)
+        {
+            var list = new List<TResult>();
+            var index = 0;
+            foreach (var url in urls)
+            {
+                list.Add( selector(url, index));
+                index++;
+            }
+
+            return list;
+        }
     }
     
 }

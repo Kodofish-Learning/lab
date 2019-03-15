@@ -5,6 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using System.Linq;
+using Lab.Extensions;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -16,7 +17,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, url => url.Replace("http:", "https:"));
+            var actual = urls.JoeySelect(url => url.Replace("http:", "https:"));
             var expected = new List<string>
             {
                 "https://tw.yahoo.com",
@@ -34,7 +35,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls().ToList();
 
-            var actual = JoeySelect(urls, url => url.Replace("http:", "https:") + "/joey");
+            var actual = urls.JoeySelect(url => url.Replace("http:", "https:") + "/joey");
             var expected = new List<string>
             {
                 "https://tw.yahoo.com/joey",
@@ -51,7 +52,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls().ToList();
 
-            var actual = JoeySelect(urls, url => url.Replace("http","****") + "/joey");
+            var actual = urls.JoeySelect(url => url.Replace("http","****") + "/joey");
             var expected = new List<string>
             {
                 "****://tw.yahoo.com/joey",
@@ -80,7 +81,7 @@ namespace CSharpAdvanceDesignTests
                 "David-Chen",
             };
 
-            var actual = JoeySelect(employees, e => $"{e.FirstName}-{e.LastName}");
+            var actual = employees.JoeySelect(e => $"{e.FirstName}-{e.LastName}");
             expected.ToExpectedObject().ShouldMatch(actual); 
         }
 
@@ -101,35 +102,10 @@ namespace CSharpAdvanceDesignTests
                 "3.David-Chen",
             };
 
-            var actual = JoeySelectWithIndex(employees, (e, index) => $"{index+1}.{e.FirstName}-{e.LastName}");
+            var actual = employees.JoeySelectWithIndex((e, index) => $"{index+1}.{e.FirstName}-{e.LastName}");
             expected.ToExpectedObject().ShouldMatch(actual);
         }
-        
-        private IEnumerable<TResult> JoeySelectWithIndex<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, int, TResult> selector)
-        {
-            var list = new List<TResult>();
-            var index = 0;
-            foreach (var url in urls)
-            {
-                list.Add( selector(url, index));
-                index++;
-            }
 
-            return list;
-        }
-
-        
-        private IEnumerable<TResult> JoeySelect<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, TResult> mapper)
-        {
-            var list = new List<TResult>();
-            foreach (var url in urls)
-            {
-                
-               list.Add(mapper(url));
-            }
-
-            return list;
-        }
 
         private static IEnumerable<string> GetUrls()
         {

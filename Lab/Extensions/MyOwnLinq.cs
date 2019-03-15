@@ -98,6 +98,18 @@ namespace Lab.Extensions
                     yield break;
             }
         }
+
+        public static bool JoeyAll(this IEnumerable<Girl> girls, Func<Girl, bool> predicate)
+        {
+            var sourceGirls = girls.GetEnumerator();
+            while (sourceGirls.MoveNext())
+            {
+                var girl = sourceGirls.Current;
+                if (predicate(girl)) return false;
+            }
+
+            return true;
+        }
     }
     
 }

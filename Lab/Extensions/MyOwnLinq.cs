@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Lab.Entities;
 
 namespace Lab.Extensions
 {
@@ -63,6 +64,19 @@ namespace Lab.Extensions
             }
 
             return list;
+        }
+
+        public static IEnumerable<Employee> JoeyTake(this IEnumerable<Employee> employees, int count)
+        {
+            var enumerator = employees.GetEnumerator();
+            var index = 0;
+            while (enumerator.MoveNext())
+            {
+                var item = enumerator.Current;
+                yield return item;
+//                index++;
+                if (++index == count) break;
+            }
         }
     }
     

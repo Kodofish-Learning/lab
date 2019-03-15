@@ -46,6 +46,23 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual.ToList());
         }
 
+        [Test]
+        public void replace_http_to_https_url_mask()
+        {
+            var urls = GetUrls().ToList();
+
+            var actual = JoeySelect(urls, url => url.Replace("http","****") + "/joey");
+            var expected = new List<string>
+            {
+                "****://tw.yahoo.com/joey",
+                "****s://facebook.com/joey",
+                "****s://twitter.com/joey",
+                "****://github.com/joey",
+            };
+
+            expected.ToExpectedObject().ShouldMatch(actual.ToList());
+        }
+
         private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> mapper)
         {
             var list = new List<string>();

@@ -55,19 +55,20 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = FishGroupSum(products);
+            var actual = FishGroupSum(products, 3, it => it.Cost);
 
             var expected = new[] { 63, 153, 89};
             expected.ToExpectedObject().ShouldMatch(actual); 
         }
 
-        private IEnumerable<int> FishGroupSum(IEnumerable<Product> products)
+        private IEnumerable<int> FishGroupSum(IEnumerable<Product> products, int groupSize, Func<Product, int> selector)
         {
-            var count = 3;
+            var count = groupSize;
             var index = 0;
-            while (count*index < products.Count())
+            var i = products.Count();
+            while (count*index < i)
             {
-                yield return products.Skip(index*count).Take(count).Sum(it => it.Cost);
+                yield return products.Skip(index*count).Take(count).Sum(selector);
                 index++;
             }
         }

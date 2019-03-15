@@ -27,6 +27,15 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
 
+        [Test]
+        public void number_skip_3()
+        {
+            var numbers = new[] { 10,20,30,40};
+            var actual = numbers.JoeySkip(3);
+            var expected = new[] {40};
+            expected.ToExpectedObject().ShouldEqual(actual);
+        }
+
         private static IEnumerable<Employee> GetEmployees()
         {
             return new List<Employee>

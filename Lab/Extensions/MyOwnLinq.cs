@@ -75,7 +75,7 @@ namespace Lab.Extensions
                 var item = enumerator.Current;
                 yield return item;
 //                index++;
-                if (++index == count) break;
+                if (++index == count) yield break;
             }
         }
 

@@ -84,6 +84,41 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual); 
         }
 
+        
+        [Test]
+        public void get_full_name_with_seqNo()
+        {
+            var employees = new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"}
+            };
+            var expected = new[]
+            {
+                "1.Joey-Chen",
+                "2.Tom-Li",
+                "3.David-Chen",
+            };
+
+            var actual = JoeySelectWithIndex(employees, (e, index) => $"{index+1}.{e.FirstName}-{e.LastName}");
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
+        
+        private IEnumerable<TResult> JoeySelectWithIndex<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, int, TResult> selector)
+        {
+            var list = new List<TResult>();
+            var index = 0;
+            foreach (var url in urls)
+            {
+                list.Add( selector(url, index));
+                index++;
+            }
+
+            return list;
+        }
+
+        
         private IEnumerable<TResult> JoeySelect<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, TResult> mapper)
         {
             var list = new List<TResult>();

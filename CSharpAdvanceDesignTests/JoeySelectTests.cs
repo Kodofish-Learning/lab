@@ -34,7 +34,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls().ToList();
 
-            var actual = JoeySelect2(urls, url => url.Replace("http:", "https:") + "/joey");
+            var actual = JoeySelect(urls, url => url.Replace("http:", "https:") + "/joey");
             var expected = new List<string>
             {
                 "https://tw.yahoo.com/joey",
@@ -44,17 +44,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldMatch(actual.ToList());
-        }
-
-        private List<string> JoeySelect2(List<string> urls, Func<string, string> mapper)
-        {
-            var list = new List<string>();
-            foreach (var url in urls)
-            {
-                list.Add(mapper(url));
-            }
-
-            return list;
         }
 
         private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> mapper)

@@ -1,4 +1,5 @@
-﻿using ExpectedObjects;
+﻿using System;
+using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -15,7 +16,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls);
+            var actual = JoeySelect(urls, url => url.Replace("http:", "https:"));
             var expected = new List<string>
             {
                 "https://tw.yahoo.com",
@@ -33,7 +34,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls().ToList();
 
-            var actual = JoeySelect2(urls);
+            var actual = JoeySelect2(urls, url => url.Replace("http:", "https:") + "/joey");
             var expected = new List<string>
             {
                 "https://tw.yahoo.com/joey",
@@ -45,24 +46,24 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual.ToList());
         }
 
-        private List<string> JoeySelect2(List<string> urls)
+        private List<string> JoeySelect2(List<string> urls, Func<string, string> mapper)
         {
             var list = new List<string>();
             foreach (var url in urls)
             {
-                list.Add(url.Replace("http:", "https:") + "/joey");
+                list.Add(mapper(url));
             }
 
             return list;
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
+        private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> mapper)
         {
             var list = new List<string>();
             foreach (var url in urls)
             {
                 
-               list.Add(url.Replace("http:", "https:"));
+               list.Add(mapper(url));
             }
 
             return list;

@@ -8,15 +8,27 @@ namespace Lab.Extensions
         
         public static IEnumerable<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, bool> predict)
         {
-            foreach (var product in source)
+//            foreach (var product in source)
+//            {
+//                if (predict(product))
+//                {
+//                    yield return product;
+//                }
+//            }
+
+            var sourceEnumerator = source.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
             {
-                if (predict(product))
+                var item = sourceEnumerator.Current;
+
+                if (predict(item))
                 {
-                    yield return product;
+                    yield return item;
                 }
             }
-
         }
+        
+        
         
         public static IEnumerable<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, int, bool> predict)
         {

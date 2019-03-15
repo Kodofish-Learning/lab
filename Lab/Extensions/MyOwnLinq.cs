@@ -6,18 +6,16 @@ namespace Lab.Extensions
     public static class MyOwnLinq
     {
         
-        public static List<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, bool> predict)
+        public static IEnumerable<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, bool> predict)
         {
-            var list = new List<TSource>();
             foreach (var product in source)
             {
                 if (predict(product))
                 {
-                    list.Add(product);
+                    yield return product;
                 }
             }
 
-            return list;
         }
         
         public static List<TSource> FishWhere<TSource>(this List<TSource> source, Func<TSource, int, bool> predict)
@@ -39,14 +37,10 @@ namespace Lab.Extensions
 
         public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, TResult> mapper)
         {
-            var list = new List<TResult>();
             foreach (var url in urls)
             {
-                
-                list.Add(mapper(url));
+                yield return mapper(url);
             }
-
-            return list;
         }
 
         public static IEnumerable<TResult> JoeySelectWithIndex<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, int, TResult> selector)

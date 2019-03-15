@@ -84,7 +84,7 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual); 
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> mapper)
+        private IEnumerable<string> JoeySelect<T>(IEnumerable<T> urls, Func<T, string> mapper)
         {
             var list = new List<string>();
             foreach (var url in urls)

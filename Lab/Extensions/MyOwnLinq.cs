@@ -105,7 +105,7 @@ namespace Lab.Extensions
             while (sourceGirls.MoveNext())
             {
                 var girl = sourceGirls.Current;
-                if (predicate(girl)) return false;
+                if (!predicate(girl)) return false;
             }
 
             return true;

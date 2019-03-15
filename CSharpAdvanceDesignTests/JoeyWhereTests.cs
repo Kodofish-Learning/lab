@@ -27,7 +27,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products);
+            var actual = products.FishWhere(product => product.Price >200 && product.Price < 500);
 
             var expected = new List<Product>
             {
@@ -54,7 +54,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = products.JoeyWhere2(product => product.Price>200 && product.Price<500 && product.Cost > 30);
+            var actual = products.FishWhere(product => product.Price>200 && product.Price<500 && product.Cost > 30);
 
             var expected = new List<Product>
             {
@@ -64,18 +64,17 @@ namespace CSharpAdvanceDesignTests
 
             expected.ToExpectedObject().ShouldMatch(actual);
         }
-
-        private static List<Product> JoeyWhere(List<Product> products)
+               
+        [Test]
+        public void find_odd_names()
         {
-            var result = new List<Product>();
-            foreach (var product in products)
+            var names = new List<string> {"Joey", "Cash", "William", "Sam", "Brian", "Jessica"};
+            var actual = names.FishWhere((n, i) => i % 2 == 0);
+            var expected = new[]
             {
-                if (product.Price >= 200 && product.Price <= 500)
-                    result.Add(product);
-                
-            }
-            
-            return result;
+                "Joey", "William", "Brian"
+            };
+            expected.ToExpectedObject().ShouldMatch(actual);
         }
     }
 }

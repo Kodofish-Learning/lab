@@ -88,6 +88,16 @@ namespace Lab.Extensions
                 if (index++ >= count) yield return sourceEnumerator.Current;
             }
         }
+
+        public static IEnumerable<Card> JoeyTakeWhile(this IEnumerable<Card> cards, Func<Card, bool> predicate)
+        {
+            foreach (var card in cards)
+            {
+                if (predicate(card)) yield return card;
+                else
+                    yield break;
+            }
+        }
     }
     
 }

@@ -33,7 +33,7 @@ namespace CSharpAdvanceDesignTests
             var numbers = new[] { 10,20,30,40};
             var actual = numbers.JoeySkip(3);
             var expected = new[] {40};
-            expected.ToExpectedObject().ShouldEqual(actual);
+            expected.ToExpectedObject().ShouldMatch(actual);
         }
 
         private static IEnumerable<Employee> GetEmployees()

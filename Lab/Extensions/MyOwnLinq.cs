@@ -79,13 +79,13 @@ namespace Lab.Extensions
             }
         }
 
-        public static IEnumerable<Employee> JoeySkip(this IEnumerable<Employee> employees, int count)
+        public static IEnumerable<T> JoeySkip<T>(this IEnumerable<T> source, int count)
         {
-            var source = employees.GetEnumerator();
+            var sourceEnumerator = source.GetEnumerator();
             var index = 0;
-            while (source.MoveNext())
+            while (sourceEnumerator.MoveNext())
             {
-                if (index++ >= count) yield return source.Current;
+                if (index++ >= count) yield return sourceEnumerator.Current;
             }
         }
     }

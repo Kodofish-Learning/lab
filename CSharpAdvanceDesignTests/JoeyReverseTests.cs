@@ -2,11 +2,11 @@
 using Lab.Entities;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyReverseTests
     {
         [Test]
@@ -19,7 +19,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee(){FirstName = "David",LastName = "Wang"},
             };
 
-            var actual = JoeyReverse(employees);
+            var actual = JoeyReverse2(employees);
 
             var expected = new List<Employee>
             {
@@ -33,7 +33,28 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Employee> JoeyReverse(IEnumerable<Employee> employees)
         {
-            throw new System.NotImplementedException();
+            return new Stack<Employee>(employees);
         }
+        
+        private IEnumerable<Employee> JoeyReverse1(IEnumerable<Employee> employees)
+        {
+            var stack = new Stack<Employee>(employees);
+            var sourceEnumerator = stack.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                yield return sourceEnumerator.Current;
+            }
+        }
+        
+        private IEnumerable<Employee> JoeyReverse2(IEnumerable<Employee> employees)
+        {
+            var stack = new Stack<Employee>(employees);
+            var sourceEnumerator = stack.GetEnumerator();
+            while (stack.Any())
+            {
+                yield return stack.Pop();
+            }
+        }
+
     }
 }

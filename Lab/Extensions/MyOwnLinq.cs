@@ -171,8 +171,8 @@ namespace Lab.Extensions
             }
         }
 
-        public static IEnumerable<TResult> JoeyZip<TSource, TSource1, TResult>(this IEnumerable<TSource> girls,
-            IEnumerable<TSource1> keys, Func<TSource, TSource1, TResult> selector)
+        public static IEnumerable<TResult> JoeyZip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> girls,
+            IEnumerable<TSecond> keys, Func<TFirst, TSecond, TResult> selector)
         {
             var girlsEnumerator = girls.GetEnumerator();
             var keysEnumerator = keys.GetEnumerator();

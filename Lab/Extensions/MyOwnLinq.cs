@@ -184,6 +184,20 @@ namespace Lab.Extensions
                 yield return selector(girl , key);
             }
         }
+
+        public static bool JoeySequenceEqual<T>(this IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer)
+        {
+            var firstEnumerator = first.GetEnumerator();
+            var secondEnumerator = second.GetEnumerator();
+            while (firstEnumerator.MoveNext())
+            {
+                if (!secondEnumerator.MoveNext()) return false;
+                
+                if (!comparer.Equals(firstEnumerator.Current, secondEnumerator.Current)) return false;
+            }
+
+            return !secondEnumerator.MoveNext();
+        }
     }
     
 }

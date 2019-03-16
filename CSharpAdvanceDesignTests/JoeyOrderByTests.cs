@@ -12,8 +12,8 @@ namespace CSharpAdvanceDesignTests
     public class JoeyOrderByTests
     {
         private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees,
-            Func<Employee, string> firstKeySelector, StringComparer firstKeyComparer,
-            Func<Employee, string> secondKeySelector, StringComparer secondKeyComparer)
+            Func<Employee, string> firstKeySelector, IComparer<string> firstKeyComparer,
+            Func<Employee, string> secondKeySelector, IComparer<string> secondKeyComparer)
         {
             //bubble sort
             var elements = employees.ToList();

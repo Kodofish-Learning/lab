@@ -23,8 +23,9 @@ namespace CSharpAdvanceDesignTests
     [TestFixture]
     public class JoeyOrderByTests
     {
-        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees, CombineKeyCompare combineKeyCompare,
-            Func<Employee, string> secondKeySelector, IComparer<string> secondKeyComparer)
+        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees,
+            CombineKeyCompare combineKeyCompare,
+            CombineKeyCompare secondKeyCompare)
         {
             //bubble sort
             var elements = employees.ToList();
@@ -37,8 +38,8 @@ namespace CSharpAdvanceDesignTests
                     var element = elements[i];
 
                     if (combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) == 0
-                        && secondKeyComparer
-                            .Compare(secondKeySelector(element), secondKeySelector(minElement)) < 0 ||
+                        && secondKeyCompare.KeyComparer
+                            .Compare(secondKeyCompare.KeySelector(element), secondKeyCompare.KeySelector(minElement)) < 0 ||
                         combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) < 0)
                     {
                         minElement = elements[i];
@@ -85,9 +86,12 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Joey", LastName = "Chen"}
             };
 
+            var firstKeyCompare = new CombineKeyCompare(element => element.LastName, StringComparer.Create(CultureInfo.CurrentCulture, true));
+            var secondKeyCompare = new CombineKeyCompare(element => element.FirstName, StringComparer.Create(CultureInfo.CurrentCulture, true));
+            
             var actual = JoeyOrderByLastName(employees, 
-                new CombineKeyCompare(element => element.LastName, StringComparer.Create(CultureInfo.CurrentCulture, true)), 
-                element => element.FirstName, StringComparer.Create(CultureInfo.CurrentCulture, true));
+                firstKeyCompare, 
+                secondKeyCompare);
 
             var expected = new[]
             {

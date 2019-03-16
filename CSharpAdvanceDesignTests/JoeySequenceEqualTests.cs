@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeySequenceEqualTests
     {
         [Test]
@@ -19,9 +18,17 @@ namespace CSharpAdvanceDesignTests
             Assert.IsTrue(actual);
         }
 
+
         private bool JoeySequenceEqual(IEnumerable<int> first, IEnumerable<int> second)
         {
-            throw new NotImplementedException();
+            var firstEnumerator = first.GetEnumerator();
+            var secondEnumerator = second.GetEnumerator();
+//            while (firstEnumerator.MoveNext() && secondEnumerator.MoveNext())
+//            {
+//                
+//            }
+
+            return true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using ExpectedObjects;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -66,11 +67,12 @@ namespace CSharpAdvanceDesignTests
         {
             var firstEnumerator = first.GetEnumerator();
             var secondEnumerator = second.GetEnumerator();
+                var equalityComparer = EqualityComparer<int>.Default;
             while (firstEnumerator.MoveNext())
             {
                 if (!secondEnumerator.MoveNext()) return false;
                 
-                if (firstEnumerator.Current != secondEnumerator.Current) return false;
+                if (!equalityComparer.Equals(firstEnumerator.Current, secondEnumerator.Current)) return false;
             }
 
             return !secondEnumerator.MoveNext();

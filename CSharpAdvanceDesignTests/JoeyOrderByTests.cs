@@ -37,7 +37,7 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    if (combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) == 0
+                    if (CompareByCombineKeyCompare(combineKeyCompare, element, minElement) == 0
                         && secondKeyCompare.KeyComparer
                             .Compare(secondKeyCompare.KeySelector(element), secondKeyCompare.KeySelector(minElement)) < 0 ||
                         combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) < 0)
@@ -50,6 +50,11 @@ namespace CSharpAdvanceDesignTests
                 elements.RemoveAt(index);
                 yield return minElement;
             }
+        }
+
+        private static int CompareByCombineKeyCompare(CombineKeyCompare combineKeyCompare, Employee element, Employee minElement)
+        {
+            return combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement));
         }
 //        [Ignore("temp")]
 //        public void orderBy_lastName()

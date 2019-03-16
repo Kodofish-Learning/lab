@@ -125,6 +125,13 @@ namespace Lab.Extensions
 
             return false;
         }
+
+        public static T JoeyFirstOrDefault<T>(this IEnumerable<T> employees)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+
+            return sourceEnumerator.MoveNext() ? sourceEnumerator.Current : default(T);
+        }
     }
     
 }

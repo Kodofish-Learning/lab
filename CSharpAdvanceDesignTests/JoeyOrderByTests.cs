@@ -1,79 +1,34 @@
 ﻿using System;
-using ExpectedObjects;
-using Lab.Entities;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using ExpectedObjects;
+using Lab.Entities;
+using NUnit.Framework;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
     public class JoeyOrderByTests
     {
-        [Ignore("temp")]
-        public void orderBy_lastName()
-        {
-            var employees = new[]
-            {
-                new Employee {FirstName = "Joey", LastName = "Wang"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "Joseph", LastName = "Chen"},
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-            };
-
-            var actual = JoeyOrderByLastName(employees);
-
-            var expected = new[]
-            {
-                new Employee {FirstName = "Joseph", LastName = "Chen"},
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "Joey", LastName = "Wang"},
-            };
-
-            expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        [Test]
-        public void orderBy_lastName_and_firstName()
-        {
-            var employees = new[]
-            {
-                new Employee {FirstName = "Joey", LastName = "Wang"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "Joseph", LastName = "Chen"},
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-            };
-
-            var actual = JoeyOrderByLastName(employees);
-
-            var expected = new[]
-            {
-                new Employee {FirstName = "Joey", LastName = "Chen"},
-                new Employee {FirstName = "Joseph", LastName = "Chen"},
-                new Employee {FirstName = "Tom", LastName = "Li"},
-                new Employee {FirstName = "Joey", LastName = "Wang"},
-            };
-
-            expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees)
+        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees,
+            Func<Employee, string> firstKeySelector, StringComparer firstKeyComparer,
+            Func<Employee, string> secondKeySelector, StringComparer secondKeyComparer)
         {
             //bubble sort
-            var stringComparer = StringComparer.Create(CultureInfo.CurrentCulture, true);
             var elements = employees.ToList();
             while (elements.Any())
             {
                 var minElement = elements[0];
                 var index = 0;
-                for (int i = 1; i < elements.Count; i++)
+                for (var i = 1; i < elements.Count; i++)
                 {
-                    var lastNameCompareResult = stringComparer.Compare(elements[i].LastName, minElement.LastName);
-                    if ((lastNameCompareResult == 0
-                        && stringComparer.Compare(elements[i].FirstName, minElement.FirstName) < 0) || 
-                        lastNameCompareResult < 0)
+                    var element = elements[i];
+
+                    if (firstKeyComparer.Compare(firstKeySelector(element), firstKeySelector(minElement)) == 0
+                        && secondKeyComparer
+                            .Compare(secondKeySelector(element), secondKeySelector(minElement)) < 0 ||
+                        firstKeyComparer.Compare(firstKeySelector(element), firstKeySelector(minElement)) < 0)
                     {
                         minElement = elements[i];
                         index = i;
@@ -83,6 +38,57 @@ namespace CSharpAdvanceDesignTests
                 elements.RemoveAt(index);
                 yield return minElement;
             }
+        }
+//        [Ignore("temp")]
+//        public void orderBy_lastName()
+//        {
+//            var employees = new[]
+//            {
+//                new Employee {FirstName = "Joey", LastName = "Wang"},
+//                new Employee {FirstName = "Tom", LastName = "Li"},
+//                new Employee {FirstName = "Joseph", LastName = "Chen"},
+//                new Employee {FirstName = "Joey", LastName = "Chen"},
+//            };
+//
+//            var actual = JoeyOrderByLastName(employees, element => element.LastName);
+//
+//            var expected = new[]
+//            {
+//                new Employee {FirstName = "Joseph", LastName = "Chen"},
+//                new Employee {FirstName = "Joey", LastName = "Chen"},
+//                new Employee {FirstName = "Tom", LastName = "Li"},
+//                new Employee {FirstName = "Joey", LastName = "Wang"},
+//            };
+//
+//            expected.ToExpectedObject().ShouldMatch(actual);
+//        }
+
+        [Test]
+        public void orderBy_lastName_and_firstName()
+        {
+            var employees = new[]
+            {
+                new Employee {FirstName = "Joey", LastName = "Wang"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "Joseph", LastName = "Chen"},
+                new Employee {FirstName = "Joey", LastName = "Chen"}
+            };
+
+            var actual = JoeyOrderByLastName(employees,
+                element => element.LastName,
+                StringComparer.Create(CultureInfo.CurrentCulture, true),
+                element => element.FirstName, 
+                StringComparer.Create(CultureInfo.CurrentCulture, true));
+
+            var expected = new[]
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Joseph", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "Joey", LastName = "Wang"}
+            };
+
+            expected.ToExpectedObject().ShouldMatch(actual);
         }
     }
 }

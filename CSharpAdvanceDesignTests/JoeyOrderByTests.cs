@@ -19,7 +19,7 @@ namespace CSharpAdvanceDesignTests
         public Func<Employee, string> KeySelector { get; private set; }
         public IComparer<string> KeyComparer { get; private set; }
 
-        public int CompareByCombineKeyCompare(Employee element, Employee minElement)
+        public int Compare(Employee element, Employee minElement)
         {
             return KeyComparer.Compare(KeySelector(element), KeySelector(minElement));
         }
@@ -42,7 +42,7 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    if (combineKeyCompare.CompareByCombineKeyCompare(element, minElement) == 0
+                    if (combineKeyCompare.Compare(element, minElement) == 0
                         && secondKeyCompare.KeyComparer
                             .Compare(secondKeyCompare.KeySelector(element), secondKeyCompare.KeySelector(minElement)) < 0 ||
                         combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) < 0)

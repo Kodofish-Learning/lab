@@ -8,11 +8,22 @@ using NUnit.Framework;
 
 namespace CSharpAdvanceDesignTests
 {
+    public class CombineKeyCompare
+    {
+        public CombineKeyCompare(Func<Employee, string> keySelector, IComparer<string> keyComparer)
+        {
+            KeySelector = keySelector;
+            KeyComparer = keyComparer;
+        }
+
+        public Func<Employee, string> KeySelector { get; private set; }
+        public IComparer<string> KeyComparer { get; private set; }
+    }
+
     [TestFixture]
     public class JoeyOrderByTests
     {
-        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees,
-            Func<Employee, string> firstKeySelector, IComparer<string> firstKeyComparer,
+        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees, CombineKeyCompare combineKeyCompare,
             Func<Employee, string> secondKeySelector, IComparer<string> secondKeyComparer)
         {
             //bubble sort
@@ -25,10 +36,10 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    if (firstKeyComparer.Compare(firstKeySelector(element), firstKeySelector(minElement)) == 0
+                    if (combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) == 0
                         && secondKeyComparer
                             .Compare(secondKeySelector(element), secondKeySelector(minElement)) < 0 ||
-                        firstKeyComparer.Compare(firstKeySelector(element), firstKeySelector(minElement)) < 0)
+                        combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) < 0)
                     {
                         minElement = elements[i];
                         index = i;
@@ -74,11 +85,9 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Joey", LastName = "Chen"}
             };
 
-            var actual = JoeyOrderByLastName(employees,
-                element => element.LastName,
-                StringComparer.Create(CultureInfo.CurrentCulture, true),
-                element => element.FirstName, 
-                StringComparer.Create(CultureInfo.CurrentCulture, true));
+            var actual = JoeyOrderByLastName(employees, 
+                new CombineKeyCompare(element => element.LastName, StringComparer.Create(CultureInfo.CurrentCulture, true)), 
+                element => element.FirstName, StringComparer.Create(CultureInfo.CurrentCulture, true));
 
             var expected = new[]
             {

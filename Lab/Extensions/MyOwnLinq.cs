@@ -132,6 +132,18 @@ namespace Lab.Extensions
 
             return sourceEnumerator.MoveNext() ? sourceEnumerator.Current : default(T);
         }
+
+        public static T JoeyLastOrDefault<T>(this IEnumerable<T> employees)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+            var result = default(T);
+            while (sourceEnumerator.MoveNext())
+            {
+                result = sourceEnumerator.Current;
+            }
+
+            return result;
+        }
     }
     
 }

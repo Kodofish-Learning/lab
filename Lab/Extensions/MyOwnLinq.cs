@@ -170,6 +170,20 @@ namespace Lab.Extensions
                 yield return stack.Pop();
             }
         }
+
+        public static IEnumerable<TResult> JoeyZip<TSource, TSource1, TResult>(this IEnumerable<TSource> girls,
+            IEnumerable<TSource1> keys, Func<TSource, TSource1, TResult> selector)
+        {
+            var girlsEnumerator = girls.GetEnumerator();
+            var keysEnumerator = keys.GetEnumerator();
+
+            while (girlsEnumerator.MoveNext() && keysEnumerator.MoveNext())
+            {
+                var girl = girlsEnumerator.Current;
+                var key = keysEnumerator.Current;
+                yield return selector(girl , key);
+            }
+        }
     }
     
 }

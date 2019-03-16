@@ -25,12 +25,22 @@ namespace CSharpAdvanceDesignTests
         }
     }
 
+    public class ComboCompare
+    {
+        public ComboCompare(CombineKeyCompare combineKeyCompare, CombineKeyCompare secondKeyCompare)
+        {
+            CombineKeyCompare = combineKeyCompare;
+            SecondKeyCompare = secondKeyCompare;
+        }
+
+        public CombineKeyCompare CombineKeyCompare { get; private set; }
+        public CombineKeyCompare SecondKeyCompare { get; private set; }
+    }
+
     [TestFixture]
     public class JoeyOrderByTests
     {
-        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees,
-            CombineKeyCompare combineKeyCompare,
-            CombineKeyCompare secondKeyCompare)
+        private IEnumerable<Employee> JoeyOrderByLastName(IEnumerable<Employee> employees, ComboCompare comboCompare)
         {
             //bubble sort
             var elements = employees.ToList();
@@ -42,10 +52,11 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    var firstCompare = combineKeyCompare.Compare(element, minElement);
-                    var secondCompare = secondKeyCompare.Compare(element, minElement);
+                    var firstCompare = comboCompare.CombineKeyCompare.Compare(element, minElement);
+                    var secondCompare = comboCompare.SecondKeyCompare.Compare(element, minElement);
                     
-                    if (firstCompare == 0 && secondCompare < 0 || firstCompare < 0)                   {
+                    if (firstCompare == 0 && secondCompare < 0 || firstCompare < 0)                   
+                    {
                         minElement = elements[i];
                         index = i;
                     }
@@ -94,9 +105,7 @@ namespace CSharpAdvanceDesignTests
             var firstKeyCompare = new CombineKeyCompare(element => element.LastName, StringComparer.Create(CultureInfo.CurrentCulture, true));
             var secondKeyCompare = new CombineKeyCompare(element => element.FirstName, StringComparer.Create(CultureInfo.CurrentCulture, true));
             
-            var actual = JoeyOrderByLastName(employees, 
-                firstKeyCompare, 
-                secondKeyCompare);
+            var actual = JoeyOrderByLastName(employees, new ComboCompare(firstKeyCompare, secondKeyCompare));
 
             var expected = new[]
             {

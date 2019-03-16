@@ -18,6 +18,11 @@ namespace CSharpAdvanceDesignTests
 
         public Func<Employee, string> KeySelector { get; private set; }
         public IComparer<string> KeyComparer { get; private set; }
+
+        public int CompareByCombineKeyCompare(Employee element, Employee minElement)
+        {
+            return KeyComparer.Compare(KeySelector(element), KeySelector(minElement));
+        }
     }
 
     [TestFixture]
@@ -37,7 +42,7 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    if (CompareByCombineKeyCompare(combineKeyCompare, element, minElement) == 0
+                    if (combineKeyCompare.CompareByCombineKeyCompare(element, minElement) == 0
                         && secondKeyCompare.KeyComparer
                             .Compare(secondKeyCompare.KeySelector(element), secondKeyCompare.KeySelector(minElement)) < 0 ||
                         combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement)) < 0)
@@ -52,11 +57,7 @@ namespace CSharpAdvanceDesignTests
             }
         }
 
-        private static int CompareByCombineKeyCompare(CombineKeyCompare combineKeyCompare, Employee element, Employee minElement)
-        {
-            return combineKeyCompare.KeyComparer.Compare(combineKeyCompare.KeySelector(element), combineKeyCompare.KeySelector(minElement));
-        }
-//        [Ignore("temp")]
+        //        [Ignore("temp")]
 //        public void orderBy_lastName()
 //        {
 //            var employees = new[]

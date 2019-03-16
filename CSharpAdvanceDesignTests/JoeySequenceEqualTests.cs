@@ -30,6 +30,17 @@ namespace CSharpAdvanceDesignTests
         }
 
         [Test]
+        public void compare_two_numbers_sequence_not_equal2()
+        {
+            var first = new List<int> { 3, 2, 1 };
+            var second = new List<int> { 3, 2, 1, 0 };
+
+            var actual = JoeySequenceEqual(first, second);
+
+            Assert.IsFalse(actual);
+        }
+
+        [Test]
         public void compare_two_numbers_sequence_diff_not_equal()
         {
             var first = new List<int> { 3, 1, 2 };
@@ -55,16 +66,14 @@ namespace CSharpAdvanceDesignTests
         {
             var firstEnumerator = first.GetEnumerator();
             var secondEnumerator = second.GetEnumerator();
-            while (true)
+            while (firstEnumerator.MoveNext())
             {
-                var firstEmpty = !firstEnumerator.MoveNext();
-                var secondEmpty = !secondEnumerator.MoveNext();
-                
-                if (firstEmpty && secondEmpty) return true;
-                if (firstEmpty || secondEmpty) return false;
+                if (!secondEnumerator.MoveNext()) return false;
                 
                 if (firstEnumerator.Current != secondEnumerator.Current) return false;
             }
+
+            return !secondEnumerator.MoveNext();
         }
     }
 }

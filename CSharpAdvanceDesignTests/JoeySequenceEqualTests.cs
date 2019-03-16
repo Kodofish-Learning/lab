@@ -63,7 +63,7 @@ namespace CSharpAdvanceDesignTests
             Assert.IsTrue(actual);
         }
 
-        private bool JoeySequenceEqual(IEnumerable<int> first, IEnumerable<int> second, EqualityComparer<int> comparer)
+        private bool JoeySequenceEqual<T>(IEnumerable<T> first, IEnumerable<T> second, EqualityComparer<T> comparer)
         {
             var firstEnumerator = first.GetEnumerator();
             var secondEnumerator = second.GetEnumerator();

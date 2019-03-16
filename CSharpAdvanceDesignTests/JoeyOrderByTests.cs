@@ -25,7 +25,7 @@ namespace CSharpAdvanceDesignTests
         }
     }
 
-    public class ComboCompare
+    public class ComboCompare : IComparer<Employee>
     {
         public ComboCompare(CombineKeyCompare combineKeyCompare, CombineKeyCompare secondKeyCompare)
         {
@@ -35,6 +35,13 @@ namespace CSharpAdvanceDesignTests
 
         public CombineKeyCompare CombineKeyCompare { get; private set; }
         public CombineKeyCompare SecondKeyCompare { get; private set; }
+        public int Compare(Employee x, Employee y)
+        {
+            var firstCompare = CombineKeyCompare.Compare(x, y);
+            var secondCompare = SecondKeyCompare.Compare(x, y);
+
+            return firstCompare == 0 ? secondCompare : firstCompare;
+        }
     }
 
     [TestFixture]
@@ -52,10 +59,7 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    var firstCompare = comboCompare.CombineKeyCompare.Compare(element, minElement);
-                    var secondCompare = comboCompare.SecondKeyCompare.Compare(element, minElement);
-                    
-                    if (firstCompare == 0 && secondCompare < 0 || firstCompare < 0)                   
+                    if (comboCompare.Compare(element, minElement) < 0)
                     {
                         minElement = elements[i];
                         index = i;

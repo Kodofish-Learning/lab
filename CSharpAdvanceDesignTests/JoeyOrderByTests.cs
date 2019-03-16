@@ -33,8 +33,8 @@ namespace CSharpAdvanceDesignTests
             SecondKeyCompare = secondKeyCompare;
         }
 
-        public CombineKeyCompare CombineKeyCompare { get; private set; }
-        public CombineKeyCompare SecondKeyCompare { get; private set; }
+        private CombineKeyCompare CombineKeyCompare { get; set; }
+        private CombineKeyCompare SecondKeyCompare { get; set; }
         public int Compare(Employee x, Employee y)
         {
             var firstCompare = CombineKeyCompare.Compare(x, y);

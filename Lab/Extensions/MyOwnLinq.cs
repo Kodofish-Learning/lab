@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Lab.Entities;
 
 namespace Lab.Extensions
@@ -143,6 +144,31 @@ namespace Lab.Extensions
             }
 
             return result;
+        }
+
+        public static IEnumerable<T> JoeyReverse<T>(IEnumerable<T> employees)
+        {
+            return new Stack<T>(employees);
+        }
+
+        private static IEnumerable<T> JoeyReverse1<T>(IEnumerable<T> employees)
+        {
+            var stack = new Stack<T>(employees);
+            var sourceEnumerator = stack.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                yield return sourceEnumerator.Current;
+            }
+        }
+
+        private static IEnumerable<T> JoeyReverse2<T>(IEnumerable<T> employees)
+        {
+            var stack = new Stack<T>(employees);
+            var sourceEnumerator = stack.GetEnumerator();
+            while (stack.Any())
+            {
+                yield return stack.Pop();
+            }
         }
     }
     

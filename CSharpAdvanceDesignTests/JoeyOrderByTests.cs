@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace CSharpAdvanceDesignTests
 {
-    public class CombineKeyCompare
+    public class CombineKeyCompare : IComparer<Employee>
     {
         public CombineKeyCompare(Func<Employee, string> keySelector, IComparer<string> keyComparer)
         {

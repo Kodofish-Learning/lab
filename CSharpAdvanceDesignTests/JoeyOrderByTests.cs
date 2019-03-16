@@ -42,9 +42,10 @@ namespace CSharpAdvanceDesignTests
                 {
                     var element = elements[i];
 
-                    if (combineKeyCompare.Compare(element, minElement) == 0
-                        && secondKeyCompare.Compare(element, minElement) < 0 ||
-                        combineKeyCompare.Compare(element, minElement) < 0)                   {
+                    var firstCompare = combineKeyCompare.Compare(element, minElement);
+                    var secondCompare = secondKeyCompare.Compare(element, minElement);
+                    
+                    if (firstCompare == 0 && secondCompare < 0 || firstCompare < 0)                   {
                         minElement = elements[i];
                         index = i;
                     }

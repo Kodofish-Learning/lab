@@ -47,11 +47,15 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Tuple<string, string>> JoeyJoin(IEnumerable<Employee> employees, IEnumerable<Pet> pets)
         {
-            
-            foreach (var employee in employees)
+            var employeesEnumerator = employees.GetEnumerator();
+            while (employeesEnumerator.MoveNext())
             {
-                foreach (var pet in pets)
+                var employee = employeesEnumerator.Current;
+
+                var petsEnumerator = pets.GetEnumerator();
+                while (petsEnumerator.MoveNext())
                 {
+                    var pet = petsEnumerator.Current;
                     if (pet.Owner.FirstName == employee.FirstName)
                     {
                         yield return Tuple.Create(pet.Owner.FirstName, pet.Name);

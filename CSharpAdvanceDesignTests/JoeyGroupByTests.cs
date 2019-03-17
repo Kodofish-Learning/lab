@@ -38,10 +38,10 @@ namespace CSharpAdvanceDesignTests
         {
             var lookup = new Dictionary<string, List<Employee>>();
 
-            var employeEnumerator = employees.GetEnumerator();
-            while (employeEnumerator.MoveNext())
+            var employeeEnumerator = employees.GetEnumerator();
+            while (employeeEnumerator.MoveNext())
             {
-                var employee = employeEnumerator.Current;
+                var employee = employeeEnumerator.Current;
 
                 if (lookup.ContainsKey(employee.LastName))
                 {
@@ -58,11 +58,13 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<IGrouping<string, Employee>> ConvertMultiGrouping(Dictionary<string, List<Employee>> lookup)
         {
-            var enumerator = lookup.GetEnumerator();
-            while (enumerator.MoveNext())
+            using (var enumerator = lookup.GetEnumerator())
             {
-                var keyValuePair = enumerator.Current;
-                yield return new MyGrouping(keyValuePair.Key, keyValuePair.Value);
+                while (enumerator.MoveNext())
+                {
+                    var keyValuePair = enumerator.Current;
+                    yield return new MyGrouping(keyValuePair.Key, keyValuePair.Value);
+                }
             }
         }
     }

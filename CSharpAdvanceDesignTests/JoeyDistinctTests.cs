@@ -22,16 +22,16 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> Distinct(IEnumerable<int> numbers)
         {
-            return new HashSet<int>(numbers);
-//            var sourceEnumerator = numbers.GetEnumerator();
-//            var result = new HashSet<int>();
-//            
-//            while (sourceEnumerator.MoveNext())
-//            {
-//                result.Add(sourceEnumerator.Current);
-//            }
-//
-//            return result;
+            var sourceEnumerator = numbers.GetEnumerator();
+            var result = new HashSet<int>();
+            
+            while (sourceEnumerator.MoveNext())
+            {
+                if (result.Add(sourceEnumerator.Current))
+                {
+                    yield return sourceEnumerator.Current;
+                }
+            }
         }
     }
 }

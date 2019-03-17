@@ -3,11 +3,11 @@ using Lab.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyJoinTests
     {
         [Test]
@@ -47,7 +47,17 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Tuple<string, string>> JoeyJoin(IEnumerable<Employee> employees, IEnumerable<Pet> pets)
         {
-            throw new NotImplementedException();
+            
+            foreach (var employee in employees)
+            {
+                foreach (var pet in pets)
+                {
+                    if (pet.Owner.FirstName == employee.FirstName)
+                    {
+                        yield return Tuple.Create(pet.Owner.FirstName, pet.Name);
+                    }
+                }
+            }
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyUnionTests
     {
         [Test]
@@ -22,7 +21,32 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> JoeyUnion(IEnumerable<int> first, IEnumerable<int> second)
         {
-            throw new System.NotImplementedException();
+            var joeyConcat = JoeyConcat(first, second);
+            var sourceEnumerator = joeyConcat.GetEnumerator();
+            var hashSet = new HashSet<int>();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (hashSet.Add(current))
+                {
+                    yield return current;
+                }
+            }
+        }
+        
+        private IEnumerable<T> JoeyConcat<T>(IEnumerable<T> first, IEnumerable<T> second)
+        {
+            var firstEnumerator = first.GetEnumerator();
+            while (firstEnumerator.MoveNext())
+            {
+                yield return firstEnumerator.Current;
+            }
+
+            var secondEnumerator = second.GetEnumerator();
+            while (secondEnumerator.MoveNext())
+            {
+                yield return secondEnumerator.Current;
+            }
         }
     }
 }

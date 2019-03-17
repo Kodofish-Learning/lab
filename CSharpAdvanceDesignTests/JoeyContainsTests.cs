@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Lab.EqualityComparer;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -28,10 +29,12 @@ namespace CSharpAdvanceDesignTests
         private static bool JoeyContains(IEnumerable<Employee> employees, Employee value)
         {
             var sourceEnumerator = employees.GetEnumerator();
+            var comparer = new JoeyEmployeeWithPhoneEqualityComparer();
+            
             while (sourceEnumerator.MoveNext())
             {
                 var item = sourceEnumerator.Current;
-                if (item.FirstName == value.FirstName && item.LastName == value.LastName && item.Phone == value.Phone)
+                if (comparer.Equals(item, value))
                 {
                     return true;
                 }

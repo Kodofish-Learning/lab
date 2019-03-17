@@ -3,6 +3,7 @@ using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -20,9 +21,14 @@ namespace CSharpAdvanceDesignTests
                 {"validator", new ProductValidator()},
             };
 
-//            var validators = JoeyOfType<IValidator<Product>(?);
+            var validators = JoeyOfType<IValidator<Product>>(arguments);
 
-            //Assert.AreEqual(1, validators.Count());
+            Assert.AreEqual(1, validators.Count());
+        }
+
+        private IEnumerable<TResult> JoeyOfType<TResult>(Dictionary<string, object> arguments)
+        {   
+            throw new System.NotImplementedException();
         }
     }
 }

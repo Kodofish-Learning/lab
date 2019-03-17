@@ -30,11 +30,10 @@ namespace CSharpAdvanceDesignTests
             }
             
             var firstEnumerator = first.GetEnumerator();
-            var firstHashSet = new HashSet<int>();
             while (firstEnumerator.MoveNext())
             {
                 var current = firstEnumerator.Current;
-                if (!hashSet.Add(current) && firstHashSet.Add(current))
+                if (hashSet.Remove(current))
                 {
                     yield return current;
                 }

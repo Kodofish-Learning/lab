@@ -1,11 +1,11 @@
-﻿using ExpectedObjects;
+﻿using System;
+using ExpectedObjects;
 using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeySelectManyTests
     {
         [Test]
@@ -17,7 +17,7 @@ namespace CSharpAdvanceDesignTests
                 new City {Name = "新北市", Sections = new List<string> {"三重", "新莊"}},
             };
 
-            var actual = JoeySelectMany(cities);
+            var actual = JoeySelectMany(cities, (city, section) => $"{city.Name}-{section}");
 
             var expected = new[]
             {
@@ -31,9 +31,19 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<string> JoeySelectMany(IEnumerable<City> cities)
+        private IEnumerable<string> JoeySelectMany(IEnumerable<City> cities, Func<City, string, string> selector)
         {
-            throw new System.NotImplementedException();
+            var sourceEnumerator = cities.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var city = sourceEnumerator.Current;
+                var sectionsEnumerator = city.Sections.GetEnumerator();
+                while (sectionsEnumerator.MoveNext())
+                {
+                    var sectionsEnumeratorCurrent = sectionsEnumerator.Current;
+                    yield return selector(city, sectionsEnumeratorCurrent);
+                }
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using ExpectedObjects;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Lab.Extensions;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -21,7 +22,7 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> JoeyUnion(IEnumerable<int> first, IEnumerable<int> second)
         {
-            var joeyConcat = JoeyConcat(first, second);
+            var joeyConcat = first.JoeyConcat(second);
             var sourceEnumerator = joeyConcat.GetEnumerator();
             var hashSet = new HashSet<int>();
             while (sourceEnumerator.MoveNext())
@@ -31,21 +32,6 @@ namespace CSharpAdvanceDesignTests
                 {
                     yield return current;
                 }
-            }
-        }
-        
-        private IEnumerable<T> JoeyConcat<T>(IEnumerable<T> first, IEnumerable<T> second)
-        {
-            var firstEnumerator = first.GetEnumerator();
-            while (firstEnumerator.MoveNext())
-            {
-                yield return firstEnumerator.Current;
-            }
-
-            var secondEnumerator = second.GetEnumerator();
-            while (secondEnumerator.MoveNext())
-            {
-                yield return secondEnumerator.Current;
             }
         }
     }

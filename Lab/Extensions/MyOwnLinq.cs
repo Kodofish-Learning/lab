@@ -198,6 +198,21 @@ namespace Lab.Extensions
 
             return !secondEnumerator.MoveNext();
         }
+
+        public static IEnumerable<T> JoeyConcat<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        {
+            var firstEnumerator = first.GetEnumerator();
+            while (firstEnumerator.MoveNext())
+            {
+                yield return firstEnumerator.Current;
+            }
+
+            var secondEnumerator = second.GetEnumerator();
+            while (secondEnumerator.MoveNext())
+            {
+                yield return secondEnumerator.Current;
+            }
+        }
     }
     
 }

@@ -38,8 +38,6 @@ namespace CSharpAdvanceDesignTests
                     yield return current;
                 }
             }
-
-            
         }
     }
 }

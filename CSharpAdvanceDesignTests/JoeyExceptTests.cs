@@ -1,11 +1,11 @@
 ﻿using ExpectedObjects;
 using NUnit.Framework;
 using System.Collections.Generic;
+using FluentAssertions;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyExceptTests
     {
         [Test]
@@ -22,7 +22,24 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> JoeyExcept(IEnumerable<int> first, IEnumerable<int> second)
         {
-            throw new System.NotImplementedException();
+            var firstEnumerator = first.GetEnumerator();
+            var hashSet = new HashSet<int>();
+            
+            var secondEnumerator = second.GetEnumerator();
+            while (secondEnumerator.MoveNext())
+            {
+                hashSet.Add(secondEnumerator.Current);
+            }
+            
+            while (firstEnumerator.MoveNext())
+            {
+                var current = firstEnumerator.Current;
+                if (!hashSet.Remove(current))
+                {
+                    yield return current;
+                }
+            }
+
         }
     }
 }

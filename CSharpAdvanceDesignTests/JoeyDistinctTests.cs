@@ -3,6 +3,8 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using System.Linq;
+using Lab.Entities;
+using Lab.Extensions;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -13,14 +15,35 @@ namespace CSharpAdvanceDesignTests
         public void distinct_numbers()
         {
             var numbers = new[] { 91, 3, 91, -1 };
-            var actual = Distinct(numbers);
+            var actual = FishDistinct(numbers);
 
             var expected = new[] { 91, 3, -1 };
 
             expected.ToExpectedObject().ShouldMatch(actual);
         }
+        
+        [Test]
+        public void distinct_employee()
+        {
+            var employees = new List<Employee>
+            {
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"}
+            };
+            var expected = new[]
+            {
+                
+                new Employee {FirstName = "Joey", LastName = "Chen"},
+                new Employee {FirstName = "Tom", LastName = "Li"},
+                new Employee {FirstName = "David", LastName = "Chen"}
+            };
+            var actual = FishDistinct(employees);
+            expected.ToExpectedObject().ShouldMatch(actual);
+        }
 
-        private IEnumerable<int> Distinct(IEnumerable<int> numbers)
+        private IEnumerable<int> FishDistinct(IEnumerable<int> numbers)
         {
             var sourceEnumerator = numbers.GetEnumerator();
             var result = new HashSet<int>();

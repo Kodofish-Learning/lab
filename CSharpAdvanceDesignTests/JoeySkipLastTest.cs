@@ -29,7 +29,6 @@ namespace CSharpAdvanceDesignTests
                     yield return queue.Dequeue();
                 }
                 queue.Enqueue(current);
-                
             }
         }
     }

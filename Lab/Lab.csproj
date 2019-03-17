@@ -48,7 +48,7 @@
     <Compile Include="Entities\Girl.cs" />
     <Compile Include="Entities\Key.cs" />
     <Compile Include="Entities\Pet.cs" />
-    <Compile Include="Entities\TSource.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="EqualityComparer\JoeyEmployeeWithPhoneEqualityComparer.cs" />
     <Compile Include="Extensions\MyOwnLinq.cs" />

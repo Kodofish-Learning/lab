@@ -112,7 +112,7 @@ namespace Lab.Extensions
             return true;
         }
 
-        public static bool JoeyAny(this IEnumerable<TSource> enumerable, Func<TSource, bool> predicate)
+        public static bool JoeyAny(this IEnumerable<Product> enumerable, Func<Product, bool> predicate)
         {
             var source = enumerable.GetEnumerator();
             while (source.MoveNext())

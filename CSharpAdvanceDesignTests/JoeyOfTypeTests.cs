@@ -7,7 +7,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture()]
-    [Ignore("not yet")]
     public class JoeyOfTypeTests
     {
         [Test]
@@ -17,11 +16,11 @@ namespace CSharpAdvanceDesignTests
 
             var arguments = new Dictionary<string, object>
             {
-                {"model", new TSource {Price = 100, Cost = 111}},
+                {"model", new Product {Price = 100, Cost = 111}},
                 {"validator", new ProductValidator()},
             };
 
-            //var validators = JoeyOfType(?);
+//            var validators = JoeyOfType<IValidator<Product>(?);
 
             //Assert.AreEqual(1, validators.Count());
         }

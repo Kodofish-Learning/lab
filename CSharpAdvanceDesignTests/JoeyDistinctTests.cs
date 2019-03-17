@@ -46,7 +46,6 @@ namespace CSharpAdvanceDesignTests
         {
             var sourceEnumerator = employees.GetEnumerator();
             var hashSet = new HashSet<TSource>(comparer);
-            var equalityComparer = new JoeyEmployeeWithPhoneEqualityComparer();
             while (sourceEnumerator.MoveNext())
             {
                 if (hashSet.Add(sourceEnumerator.Current))

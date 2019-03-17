@@ -11,8 +11,8 @@ namespace CSharpAdvanceDesignTests
         [Test]
         public void union_numbers()
         {
-            var first = new[] { 1, 3, 5 };
-            var second = new[] { 5, 3, 7 };
+            var first = new[] { 1, 3, 5, 3, 1 };
+            var second = new[] { 5, 3, 7, 7 };
 
             var actual = JoeyUnion(first, second);
             var expected = new[] { 1, 3, 5, 7 };
@@ -22,8 +22,8 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> JoeyUnion(IEnumerable<int> first, IEnumerable<int> second)
         {
-            var joeyConcat = first.JoeyConcat(second);
-            var sourceEnumerator = joeyConcat.GetEnumerator();
+            
+            var sourceEnumerator = first.GetEnumerator();
             var hashSet = new HashSet<int>();
             while (sourceEnumerator.MoveNext())
             {
@@ -32,6 +32,17 @@ namespace CSharpAdvanceDesignTests
                 {
                     yield return current;
                 }
+            }
+
+            var secondEnumerator = second.GetEnumerator();
+            while (secondEnumerator.MoveNext())
+            {
+                var current = secondEnumerator.Current;
+                if (hashSet.Add(current))
+                {
+                    yield return current;
+                }
+                
             }
         }
     }

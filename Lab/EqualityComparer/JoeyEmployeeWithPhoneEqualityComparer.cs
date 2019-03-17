@@ -13,7 +13,7 @@ namespace Lab.EqualityComparer
 
         public int GetHashCode(Employee obj)
         {
-            throw new NotImplementedException();
+            return new {obj.LastName, obj.FirstName}.GetHashCode();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Lab.Entities;
+﻿using System;
+using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products);
+            var actual = JoeyWhere(products, current => current.Price>200 && current.Price < 500);
 
             var expected = new List<Product>
             {
@@ -51,10 +52,12 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products);
+            var actual = JoeyWhere(products, 
+                current => current.Cost>10 && current.Cost < 40);
 
             var expected = new List<Product>
             {
+                new Product {Id = 1, Cost = 11, Price = 110, Supplier = "Odd-e"},
                 new Product {Id = 2, Cost = 21, Price = 210, Supplier = "Yahoo"},
                 new Product {Id = 3, Cost = 31, Price = 310, Supplier = "Odd-e"},
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
@@ -63,13 +66,13 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<Product> JoeyWhere(List<Product> products)
+        private IEnumerable<Product> JoeyWhere(List<Product> products, Func<Product, bool> func)
         {
             var sourceEnumerator = products.GetEnumerator();
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;
-                if (current.Price>200 && current.Price < 500)
+                if (func(current))
                 {
                     yield return current;
                 }

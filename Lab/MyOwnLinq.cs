@@ -40,5 +40,17 @@ namespace Lab
                 yield return func(index, current);
             }
         }
+
+        public static IEnumerable<TSource> JoeyTake<TSource>(this IEnumerable<TSource> employees, int count)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+            var index = 0;
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (++index > count) break;
+                yield return current;
+            }
+        }
     }
 }

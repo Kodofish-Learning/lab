@@ -3,6 +3,7 @@ using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
+using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -14,7 +15,7 @@ namespace CSharpAdvanceDesignTests
         {
             var employees = GetEmployees();
 
-            var actual = JoeyTake(employees);
+            var actual = employees.JoeyTake(2);
 
             var expected = new List<Employee>
             {
@@ -23,18 +24,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldMatch(actual);
-        }
-
-        private IEnumerable<Employee> JoeyTake(IEnumerable<Employee> employees)
-        {
-            var sourceEnumerator = employees.GetEnumerator();
-            var index = 0;
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                if (++index <= 2)
-                   yield return current;
-            }
         }
 
         private static IEnumerable<Employee> GetEmployees()

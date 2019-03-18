@@ -75,7 +75,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee(){FirstName = "Chen", LastName = "Joey"},
                 new Employee(){FirstName = "Lee", LastName = "Tony"},
             };
-            var actual = JoeyWhere(employees, e => e.FirstName = "Chang");
+            var actual = JoeyWhere(employees, e => e.FirstName == "Chang");
             var expected = new List<Employee>()
             {
                 new Employee(){FirstName = "Chang", LastName = "Fish"},
@@ -85,9 +85,9 @@ namespace CSharpAdvanceDesignTests
             
         }
 
-        private IEnumerable<Product> JoeyWhere(List<Product> products, Func<Product, bool> func)
+        private IEnumerable<TSource> JoeyWhere<TSource>(List<TSource> source, Func<TSource, bool> func)
         {
-            var sourceEnumerator = products.GetEnumerator();
+            var sourceEnumerator = source.GetEnumerator();
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;

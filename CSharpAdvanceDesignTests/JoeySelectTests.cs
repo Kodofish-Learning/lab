@@ -5,6 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using System.Linq;
+using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -16,8 +17,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls,
-                current => $"{current}/fish");
+            var actual = urls.JoeySelect(current => $"{current}/fish");
             var expected = new List<string>
             {
                 "http://tw.yahoo.com/fish",
@@ -38,7 +38,7 @@ namespace CSharpAdvanceDesignTests
                             new Employee(){FirstName = "Chen", LastName = "Joey"},
                             new Employee(){FirstName = "Lee", LastName = "Tony"},
                         };
-            var actual = JoeySelect(employees, s => $"{s.FirstName} {s.LastName}" );
+            var actual = employees.JoeySelect(s => $"{s.FirstName} {s.LastName}");
             var expected = new List<string>()
             {
                 "Chang Fish",
@@ -53,7 +53,7 @@ namespace CSharpAdvanceDesignTests
         {
             var urls = GetUrls();
 
-            var actual = JoeySelect(urls, current => current.Replace("http:", "https:"));
+            var actual = urls.JoeySelect(current => current.Replace("http:", "https:"));
             var expected = new List<string>
             {
                 "https://tw.yahoo.com",
@@ -63,16 +63,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
-        }
-
-        private IEnumerable<TResult> JoeySelect<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, TResult> func)
-        {
-            var sourceEnumerator = urls.GetEnumerator();
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                yield return func(current);
-            }
         }
 
         private static IEnumerable<string> GetUrls()

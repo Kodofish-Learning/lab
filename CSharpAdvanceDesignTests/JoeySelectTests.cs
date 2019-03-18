@@ -57,7 +57,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee(){FirstName = "Chen", LastName = "Joey"},
                 new Employee(){FirstName = "Lee", LastName = "Tony"},
             };
-            var actual = employees.JoeySelect(s => $"{s.FirstName} {s.LastName}");
+            var actual = MyOwnLinq.JoeySelectWithIndex(employees, (index, current) => $"{++index}. {current.FirstName} {current.LastName}") ;
             var expected = new List<string>()
             {
                 "1. Chang Fish",

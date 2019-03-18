@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Lab.Entities;
 
 namespace Lab
 {
@@ -25,6 +26,16 @@ namespace Lab
             {
                 var current = sourceEnumerator.Current;
                 yield return func(current);
+            }
+        }
+        public static IEnumerable<string> JoeySelectWithIndex(IEnumerable<Employee> urls, Func<int, Employee, string> func)
+        {
+            var sourceEnumerator = urls.GetEnumerator();
+            var index = 0;
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                yield return func(index, current);
             }
         }
     }

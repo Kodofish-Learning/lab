@@ -38,7 +38,7 @@ namespace CSharpAdvanceDesignTests
                             new Employee(){FirstName = "Chen", LastName = "Joey"},
                             new Employee(){FirstName = "Lee", LastName = "Tony"},
                         };
-            var actual = JoeySelect(employees, s => { });
+            var actual = JoeySelect(employees, s => $"{s.FirstName} {s.LastName}" );
             var expected = new List<string>()
             {
                 "Chang Fish",
@@ -65,7 +65,7 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
 
-        private IEnumerable<string> JoeySelect(IEnumerable<string> urls, Func<string, string> func)
+        private IEnumerable<TResult> JoeySelect<TSource, TResult>(IEnumerable<TSource> urls, Func<TSource, TResult> func)
         {
             var sourceEnumerator = urls.GetEnumerator();
             while (sourceEnumerator.MoveNext())

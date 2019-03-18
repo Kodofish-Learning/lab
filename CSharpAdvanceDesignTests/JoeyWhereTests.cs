@@ -66,6 +66,25 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
+        [Test]
+        public void find_employees_that_the_FirstName_is_Chang()
+        {
+            var employees = new List<Employee>()
+            {
+                new Employee(){FirstName = "Chang", LastName = "Fish"},
+                new Employee(){FirstName = "Chen", LastName = "Joey"},
+                new Employee(){FirstName = "Lee", LastName = "Tony"},
+            };
+            var actual = JoeyWhere(employees, e => e.FirstName = "Chang");
+            var expected = new List<Employee>()
+            {
+                new Employee(){FirstName = "Chang", LastName = "Fish"},
+            };
+            
+            expected.ToExpectedObject().ShouldMatch(actual);
+            
+        }
+
         private IEnumerable<Product> JoeyWhere(List<Product> products, Func<Product, bool> func)
         {
             var sourceEnumerator = products.GetEnumerator();

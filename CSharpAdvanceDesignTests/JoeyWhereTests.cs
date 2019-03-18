@@ -4,6 +4,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
 using ExpectedObjects;
+using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -25,7 +26,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products, current => current.Price>200 && current.Price < 500);
+            var actual = products.JoeyWhere(current => current.Price>200 && current.Price < 500);
 
             var expected = new List<Product>
             {
@@ -52,8 +53,7 @@ namespace CSharpAdvanceDesignTests
                 new Product {Id = 8, Cost = 18, Price = 780, Supplier = "Yahoo"}
             };
 
-            var actual = JoeyWhere(products, 
-                current => current.Cost>10 && current.Cost < 40);
+            var actual = products.JoeyWhere(current => current.Cost>10 && current.Cost < 40);
 
             var expected = new List<Product>
             {
@@ -75,7 +75,7 @@ namespace CSharpAdvanceDesignTests
                 new Employee(){FirstName = "Chen", LastName = "Joey"},
                 new Employee(){FirstName = "Lee", LastName = "Tony"},
             };
-            var actual = JoeyWhere(employees, e => e.FirstName == "Chang");
+            var actual = employees.JoeyWhere(e => e.FirstName == "Chang");
             var expected = new List<Employee>()
             {
                 new Employee(){FirstName = "Chang", LastName = "Fish"},
@@ -83,19 +83,6 @@ namespace CSharpAdvanceDesignTests
             
             expected.ToExpectedObject().ShouldMatch(actual);
             
-        }
-
-        private IEnumerable<TSource> JoeyWhere<TSource>(List<TSource> source, Func<TSource, bool> func)
-        {
-            var sourceEnumerator = source.GetEnumerator();
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                if (func(current))
-                {
-                    yield return current;
-                }
-            }
         }
     }
 }

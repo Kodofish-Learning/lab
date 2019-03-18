@@ -29,7 +29,12 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeySelect(IEnumerable<string> urls)
         {
-            throw new System.NotImplementedException();
+            var sourceEnumerator = urls.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                yield return current.Replace("http:", "https:");
+            }
         }
 
         private static IEnumerable<string> GetUrls()

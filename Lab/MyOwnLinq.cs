@@ -52,5 +52,17 @@ namespace Lab
                 yield return current;
             }
         }
+
+        public static IEnumerable<TSource> JoeySelect<TSource>(this IEnumerable<TSource> source, int count)
+        {
+            var sourceEnumerator = source.GetEnumerator();
+            var index = 0;
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (++index > count)
+                    yield return current;
+            }
+        }
     }
 }

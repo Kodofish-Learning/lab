@@ -11,6 +11,22 @@ namespace CSharpAdvanceDesignTests
     public class JoeySelectTests
     {
         [Test]
+        public void append_fish_to_url()
+        {
+            var urls = GetUrls();
+
+            var actual = JoeySelect(urls);
+            var expected = new List<string>
+            {
+                "http://tw.yahoo.com/fish",
+                "https://facebook.com/fish",
+                "https://twitter.com/fish",
+                "http://github.com/fish",
+            };
+
+            expected.ToExpectedObject().ShouldEqual(actual.ToList());
+        }
+        [Test]
         public void replace_http_to_https()
         {
             var urls = GetUrls();

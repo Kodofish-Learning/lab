@@ -19,22 +19,24 @@ namespace Lab
             }
         }
 
-        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> urls, Func<TSource, TResult> func)
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> func)
         {
-            var sourceEnumerator = urls.GetEnumerator();
+            var sourceEnumerator = source.GetEnumerator();
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;
                 yield return func(current);
             }
         }
-        public static IEnumerable<string> JoeySelectWithIndex(IEnumerable<Employee> urls, Func<int, Employee, string> func)
+        public static IEnumerable<TResult> JoeySelect<TSource, TResult>(this IEnumerable<TSource> source, 
+            Func<int, TSource, TResult> func)
         {
-            var sourceEnumerator = urls.GetEnumerator();
+            var sourceEnumerator = source.GetEnumerator();
             var index = 0;
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;
+                index++;
                 yield return func(index, current);
             }
         }

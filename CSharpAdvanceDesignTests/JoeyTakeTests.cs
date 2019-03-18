@@ -22,12 +22,19 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Tom", LastName = "Li"},
             };
 
-            expected.ToExpectedObject().ShouldEqual(actual);
+            expected.ToExpectedObject().ShouldMatch(actual);
         }
 
         private IEnumerable<Employee> JoeyTake(IEnumerable<Employee> employees)
         {
-            throw new System.NotImplementedException();
+            var sourceEnumerator = employees.GetEnumerator();
+            var index = 0;
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (++index <= 2)
+                   yield return current;
+            }
         }
 
         private static IEnumerable<Employee> GetEmployees()

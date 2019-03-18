@@ -47,6 +47,25 @@ namespace CSharpAdvanceDesignTests
             };
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
+    
+        [Test]
+        public void print_employee_name_with_Index()
+        {
+            var employees = new List<Employee>()
+            {
+                new Employee(){FirstName = "Chang", LastName = "Fish"},
+                new Employee(){FirstName = "Chen", LastName = "Joey"},
+                new Employee(){FirstName = "Lee", LastName = "Tony"},
+            };
+            var actual = employees.JoeySelect(s => $"{s.FirstName} {s.LastName}");
+            var expected = new List<string>()
+            {
+                "1. Chang Fish",
+                "2. Chen Joey",
+                "3. Lee Tony"
+            };
+            expected.ToExpectedObject().ShouldEqual(actual.ToList());
+        }
         
         [Test]
         public void replace_http_to_https()

@@ -28,6 +28,26 @@ namespace CSharpAdvanceDesignTests
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
         }
+
+        [Test]
+        public void print_employee_name()
+        {
+            var employees = new List<Employee>()
+                        {
+                            new Employee(){FirstName = "Chang", LastName = "Fish"},
+                            new Employee(){FirstName = "Chen", LastName = "Joey"},
+                            new Employee(){FirstName = "Lee", LastName = "Tony"},
+                        };
+            var actual = JoeySelect(employees, s => { });
+            var expected = new List<string>()
+            {
+                "Chang Fish",
+                "Chen Joey",
+                "Lee Tony"
+            };
+            expected.ToExpectedObject().ShouldEqual(actual.ToList());
+        }
+        
         [Test]
         public void replace_http_to_https()
         {

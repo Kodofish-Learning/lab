@@ -6,7 +6,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyElementAtTests
     {
         [Test]
@@ -28,7 +27,20 @@ namespace CSharpAdvanceDesignTests
 
         private Employee JoeyElementAt(IEnumerable<Employee> employees, int index)
         {
-            throw new System.NotImplementedException();
+            var count = 0;
+            var sourceEnumerator = employees.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (count == index)
+                {
+                    return current;
+                }
+
+                count++;
+            }
+
+            return default(Employee);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Lab.Entities;
+﻿using System;
+using Lab.Entities;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -19,17 +20,17 @@ namespace CSharpAdvanceDesignTests
                 new Girl{Age = 30},
             };
 
-            var actual = JoeyAll(girls);
+            var actual = JoeyAll(girls, current => current.Age > 18);
             Assert.IsFalse(actual);
         }
 
-        private bool JoeyAll(IEnumerable<Girl> girls)
+        private bool JoeyAll(IEnumerable<Girl> girls, Func<Girl, bool> func)
         {
             var sourceEnumerator = girls.GetEnumerator();
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;
-                if (current.Age < 18)
+                if (!func(current))
                 {
                     return false;
                 }

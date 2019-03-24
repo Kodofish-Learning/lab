@@ -36,6 +36,32 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(pairs);
         }
 
+        [Test]
+        public void pair_girls_and_keys_CardType()
+        {
+            var girls = new List<Girl>
+            {
+                new Girl() {Name = "Mary"},
+                new Girl() {Name = "Jessica"},
+            };
+
+            var keys = new List<Key>
+            {
+                new Key() {Type = CardType.BMW, Owner = "Joey"},
+                new Key() {Type = CardType.TOYOTA, Owner = "David"},
+                new Key() {Type = CardType.Benz, Owner = "Tom"},
+            };
+
+            var pairs = JoeyZip(girls, keys);
+
+            var expected = new[]
+            {
+                "Mary-BMW",
+                "Jessica-TOYOTA",
+            };
+
+            expected.ToExpectedObject().ShouldMatch(pairs);
+        }
         private IEnumerable<string> JoeyZip(IEnumerable<Girl> girls, IEnumerable<Key> keys)
         {
             var girlsEnumerator = girls.GetEnumerator();

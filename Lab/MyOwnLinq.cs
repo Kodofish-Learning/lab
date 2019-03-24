@@ -109,5 +109,16 @@ namespace Lab
 
             return default(T);
         }
+
+        public static IEnumerable<Employee> JoeyReverse(this IEnumerable<Employee> employees)
+        {
+            var stack = new Stack<Employee>(employees);
+            var sourceEnumerator = stack.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                yield return current;
+            }
+        }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using Lab.Entities;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyContainsTests
     {
         [Test]
@@ -27,7 +27,17 @@ namespace CSharpAdvanceDesignTests
 
         private bool JoeyContains(IEnumerable<Employee> employees, Employee value)
         {
-            throw new System.NotImplementedException();
+            var sourceEnumerator = employees.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (current.FirstName == value.FirstName && current.LastName == value.LastName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

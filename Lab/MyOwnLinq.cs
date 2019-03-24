@@ -120,5 +120,18 @@ namespace Lab
                 yield return current;
             }
         }
+
+        public static IEnumerable<string> JoeyZip<TFirst, TSecond>(this IEnumerable<TFirst> girls, IEnumerable<TSecond> keys, Func<TFirst, TSecond, string> selector)
+        {
+            var girlsEnumerator = girls.GetEnumerator();
+            var keysEnumerator = keys.GetEnumerator();
+
+            while (keysEnumerator .MoveNext() && girlsEnumerator.MoveNext())
+            {
+                var key = keysEnumerator .Current;
+                var girl = girlsEnumerator.Current;
+                yield return selector(girl, key);
+            }
+        }
     }
 }

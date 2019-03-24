@@ -133,5 +133,21 @@ namespace Lab
                 yield return selector(girl, key);
             }
         }
+
+        public static bool JoeyContains(this IEnumerable<Employee> employees, Employee value)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+            EmployeeComparer comparer = new EmployeeComparer();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (comparer.Equals(current, value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

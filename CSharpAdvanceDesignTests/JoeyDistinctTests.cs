@@ -55,18 +55,9 @@ namespace CSharpAdvanceDesignTests
             }
         }
 
-        private IEnumerable<int> Distinct(IEnumerable<int> numbers)
+        private IEnumerable<T> Distinct<T>(IEnumerable<T> numbers)
         {
-            var sourceEnumerator = numbers.GetEnumerator();
-            var hashSet = new HashSet<int>();
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                if (hashSet.Add(current))
-                {
-                    yield return current;
-                }
-            }
+            return Distinct(numbers, EqualityComparer<T>.Default);
         }
     }
 }

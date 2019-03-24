@@ -6,7 +6,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyAnyTests
     {
         [Test]
@@ -36,7 +35,17 @@ namespace CSharpAdvanceDesignTests
 
         private bool JoeyAny(IEnumerable<Employee> employees)
         {
-            throw new NotImplementedException();
+            var sourceEnumerator = employees.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (current != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

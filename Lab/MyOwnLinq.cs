@@ -64,5 +64,20 @@ namespace Lab
                     yield return current;
             }
         }
+
+        public static IEnumerable<Card> JoeyTakeWhile(this IEnumerable<Card> cards, Func<Card, bool> func)
+        {
+            var sourceEnumerator = cards.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (func(current))
+                {
+                    yield break;
+                }
+
+                yield return current;
+            }
+        }
     }
 }

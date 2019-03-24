@@ -1,8 +1,10 @@
-﻿using ExpectedObjects;
+﻿using System;
+using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -22,7 +24,7 @@ namespace CSharpAdvanceDesignTests
                 new Card {Kind = CardKind.Normal, Point = 6},
             };
 
-            var actual = JoeyTakeWhile(cards);
+            var actual = cards.JoeyTakeWhile(current => current.Kind == CardKind.Separate);
 
             var expected = new List<Card>
             {
@@ -32,21 +34,6 @@ namespace CSharpAdvanceDesignTests
             };
 
             expected.ToExpectedObject().ShouldEqual(actual.ToList());
-        }
-
-        private IEnumerable<Card> JoeyTakeWhile(IEnumerable<Card> cards)
-        {
-            var sourceEnumerator = cards.GetEnumerator();
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                if (current.Kind == CardKind.Separate)
-                {
-                    yield break;
-                }
-
-                yield return current;
-            }
         }
     }
 }

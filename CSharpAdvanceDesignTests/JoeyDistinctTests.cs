@@ -37,15 +37,14 @@ namespace CSharpAdvanceDesignTests
                 new Employee {FirstName = "Tom", LastName = "Li"},
                 new Employee {FirstName = "David", LastName = "Chen"}
             };
-            var actual = Distinct(employees);
+            var actual = Distinct(employees, new EmployeeComparer());
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<Employee> Distinct<Employee>(IEnumerable<Employee> employees)
+        private IEnumerable<TSource> Distinct<TSource>(IEnumerable<TSource> employees, IEqualityComparer<TSource> comparer)
         {
             var sourceEnumerator = employees.GetEnumerator();
-            var comparer = new EmployeeComparer();
-            var hashSet = new HashSet<Employee>((IEqualityComparer<Employee>) comparer);
+            var hashSet = new HashSet<TSource>(comparer);
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;

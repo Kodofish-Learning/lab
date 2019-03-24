@@ -7,7 +7,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture()]
-    [Ignore("not yet")]
     public class JoeyConcatTests
     {
         [Test]
@@ -38,7 +37,19 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<Employee> JoeyConcat(IEnumerable<Employee> first, IEnumerable<Employee> second)
         {
-            throw new System.NotImplementedException();
+            var sourceEnumerator = first.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                yield return current;
+            }
+
+            sourceEnumerator = second.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                yield return current;
+            }
         }
     }
 }

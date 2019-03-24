@@ -94,5 +94,20 @@ namespace Lab
 
             return false;
         }
+
+        public static T JoeyFirstOrDefault<T>(this IEnumerable<T> employees)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (current != null)
+                {
+                    return current;
+                }
+            }
+
+            return default(T);
+        }
     }
 }

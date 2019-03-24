@@ -4,6 +4,7 @@ using NUnit.Framework.Internal;
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using Lab;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -15,7 +16,7 @@ namespace CSharpAdvanceDesignTests
         {
             var employees = new List<Employee>();
 
-            var actual = JoeyFirstOrDefault(employees);
+            var actual = employees.JoeyFirstOrDefault();
 
             Assert.IsNull(actual);
         }
@@ -26,40 +27,10 @@ namespace CSharpAdvanceDesignTests
                 var employees = new List<string>()
                 {"Fish"};
 
-        var actual = JoeyFirstOrDefault(employees);
+        var actual = employees.JoeyFirstOrDefault();
 
         Assert.IsNotNull(actual);
         actual.Should().Equals("Fish");
-        }
-
-        private string JoeyFirstOrDefault(List<string> employees)
-        {
-            var sourceEnumerator = employees.GetEnumerator();
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                if (current != null)
-                {
-                    return current;
-                }
-            }
-
-            return null;
-        }
-
-        private Employee JoeyFirstOrDefault(IEnumerable<Employee> employees)
-        {
-            var sourceEnumerator = employees.GetEnumerator();
-            while (sourceEnumerator.MoveNext())
-            {
-                var current = sourceEnumerator.Current;
-                if (current != null)
-                {
-                    return current;
-                }
-            }
-
-            return null;
         }
     }
 }

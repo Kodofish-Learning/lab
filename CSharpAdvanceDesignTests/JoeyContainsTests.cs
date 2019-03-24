@@ -28,16 +28,30 @@ namespace CSharpAdvanceDesignTests
         private bool JoeyContains(IEnumerable<Employee> employees, Employee value)
         {
             var sourceEnumerator = employees.GetEnumerator();
+            EmployeeComparer comparer = new EmployeeComparer();
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;
-                if (current.FirstName == value.FirstName && current.LastName == value.LastName)
+                if (comparer.Equals(current, value))
                 {
                     return true;
                 }
             }
 
             return false;
+        }
+    }
+
+    internal class EmployeeComparer : IEqualityComparer<Employee>
+    {
+        public bool Equals(Employee x, Employee y)
+        {
+            return x.FirstName == x.FirstName && x.LastName == y.LastName;
+        }
+
+        public int GetHashCode(Employee obj)
+        {
+            return new {obj.FirstName, obj.LastName}.GetHashCode();
         }
     }
 }

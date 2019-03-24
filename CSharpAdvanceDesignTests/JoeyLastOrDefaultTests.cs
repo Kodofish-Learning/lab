@@ -33,8 +33,8 @@ namespace CSharpAdvanceDesignTests
         }
         private Employee JoeyLastOrDefault(IEnumerable<Employee> employees)
         {
-            var queue = new Queue<Employee>(employees);
-            return queue.Count>0 ? queue.Dequeue(): null;
+            var queue = new Stack<Employee>(employees);
+            return queue.Count>0 ? queue.Pop(): null;
         }
     }
 }

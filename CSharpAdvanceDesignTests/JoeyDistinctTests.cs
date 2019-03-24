@@ -6,7 +6,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture()]
-    [Ignore("not yet")]
     public class JoeyDistinctTests
     {
         [Test]
@@ -22,7 +21,16 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> Distinct(IEnumerable<int> numbers)
         {
-            throw new System.NotImplementedException();
+            var sourceEnumerator = numbers.GetEnumerator();
+            var hashSet = new HashSet<int>();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (hashSet.Add(current))
+                {
+                    yield return current;
+                }
+            }
         }
     }
 }

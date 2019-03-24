@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using ExpectedObjects;
 using NUnit.Framework;
@@ -19,7 +18,20 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> JoeySkipLast(IEnumerable<int> numbers, int count)
         {
-            throw new NotImplementedException();
+            var queue = new Queue<int>();
+            var sourceEnumerator = numbers.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                
+                if (queue.Count == count)
+                {
+                    yield return queue.Dequeue();
+                }
+                queue.Enqueue(current);
+                
+                
+            }
         }
     }
 }

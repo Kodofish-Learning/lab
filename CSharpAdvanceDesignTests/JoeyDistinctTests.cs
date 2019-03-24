@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
+using Lab;
 using Lab.Entities;
 
 namespace CSharpAdvanceDesignTests
@@ -32,7 +33,6 @@ namespace CSharpAdvanceDesignTests
             };
             var expected = new[]
             {
-
                 new Employee {FirstName = "Joey", LastName = "Chen"},
                 new Employee {FirstName = "Tom", LastName = "Li"},
                 new Employee {FirstName = "David", LastName = "Chen"}
@@ -40,7 +40,22 @@ namespace CSharpAdvanceDesignTests
             var actual = Distinct(employees);
             expected.ToExpectedObject().ShouldMatch(actual);
         }
-        
+
+        private IEnumerable<Employee> Distinct<Employee>(IEnumerable<Employee> employees)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+            var comparer = new EmployeeComparer();
+            var hashSet = new HashSet<Employee>((IEqualityComparer<Employee>) comparer);
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (hashSet.Add(current))
+                {
+                    yield return current;
+                }
+            }
+        }
+
         private IEnumerable<int> Distinct(IEnumerable<int> numbers)
         {
             var sourceEnumerator = numbers.GetEnumerator();

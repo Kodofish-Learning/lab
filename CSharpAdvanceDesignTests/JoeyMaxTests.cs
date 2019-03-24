@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyMaxTests
     {
         [Test]
@@ -19,7 +18,18 @@ namespace CSharpAdvanceDesignTests
 
         private int JoeyMax(IEnumerable<int> numbers)
         {
-            throw new System.NotImplementedException();
+            var max = 0;
+            var sourceEnumerator = numbers.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (current > max)
+                {
+                    max = current;
+                }
+            }
+
+            return max;
         }
     }
 }

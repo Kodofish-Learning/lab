@@ -67,7 +67,7 @@ namespace CSharpAdvanceDesignTests
             {
                 var hasFirst = firstEnumerator.MoveNext();
                 var hasSecond = secondEnumerator.MoveNext();
-                
+                var equalityComparer = EqualityComparer<int>.Default;
                 if (!hasFirst && !hasSecond)
                 {
                     return true;
@@ -81,7 +81,7 @@ namespace CSharpAdvanceDesignTests
                 
                 var firstElement = firstEnumerator.Current;
                 var secondElement = secondEnumerator.Current;
-                if (firstElement != secondElement)
+                if (!equalityComparer.Equals(firstElement, secondElement))
                 {
                     return false;
                 }

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture()]
-    [Ignore("not yet")]
     public class JoeyZipTests
     {
         [Test]
@@ -39,7 +38,15 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<string> JoeyZip(IEnumerable<Girl> girls, IEnumerable<Key> keys)
         {
-            throw new System.NotImplementedException();
+            var girlsEnumerator = girls.GetEnumerator();
+            var keysEnumerator = keys.GetEnumerator();
+
+            while (keysEnumerator .MoveNext() && girlsEnumerator.MoveNext())
+            {
+                var key = keysEnumerator .Current;
+                var girl = girlsEnumerator.Current;
+                yield return $"{girl.Name}-{key.Owner}";
+            }
         }
     }
 }

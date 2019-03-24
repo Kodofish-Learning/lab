@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using ExpectedObjects;
 using Lab.Entities;
 using NUnit.Framework;
@@ -92,7 +93,7 @@ namespace CSharpAdvanceDesignTests
             yield return "http://github.com";
         }
 
-        private static List<Employee> GetEmployees()
+        private static IEnumerable GetEmployees()
         {
             return new List<Employee>
             {

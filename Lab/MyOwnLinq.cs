@@ -79,5 +79,20 @@ namespace Lab
                 yield return current;
             }
         }
+
+        public static bool JoeyAny<T>(this IEnumerable<T> employees, Func<T, bool> predicate)
+        {
+            var sourceEnumerator = employees.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (predicate(current))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

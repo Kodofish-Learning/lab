@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyExceptTests
     {
         [Test]
@@ -22,7 +21,23 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<int> JoeyExcept(IEnumerable<int> first, IEnumerable<int> second)
         {
-            throw new System.NotImplementedException();
+            var hashSet = new HashSet<int>();
+            var sourceEnumerator = second.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                hashSet.Add(current);
+            }
+
+            sourceEnumerator = first.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (hashSet.Add(current))
+                {
+                    yield return current;
+                }
+            }
         }
     }
 }

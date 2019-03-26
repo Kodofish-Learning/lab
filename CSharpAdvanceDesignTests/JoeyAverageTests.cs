@@ -22,7 +22,9 @@ namespace CSharpAdvanceDesignTests
 
         private double? JoeyAverage(IEnumerable<int?> numbers)
         {
-            throw new System.NotImplementedException();
+            var sum = numbers.Sum();
+            var count = numbers.Count(it=>it!=null);
+            return sum / count;
         }
     }
 }

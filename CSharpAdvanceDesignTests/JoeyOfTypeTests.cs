@@ -3,6 +3,7 @@ using Lab.Entities;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace CSharpAdvanceDesignTests
@@ -27,8 +28,16 @@ namespace CSharpAdvanceDesignTests
         }
 
         private IEnumerable<TResult> JoeyOfType<TResult>(Dictionary<string, object> arguments)
-        {   
-            throw new System.NotImplementedException();
+        {
+            var sourceEnumerator = arguments.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (current.Value is TResult type)
+                {
+                    yield return type;
+                }
+            }
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture()]
-    [Ignore("not yet")]
     public class JoeyAverageTests
     {
         [Test]
@@ -15,7 +17,7 @@ namespace CSharpAdvanceDesignTests
 
             var actual = JoeyAverage(numbers);
 
-            //var expected = ?
+            actual.Should().Be(4);
         }
 
         private double? JoeyAverage(IEnumerable<int?> numbers)

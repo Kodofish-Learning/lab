@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.SqlServer.Server;
 
 namespace CSharpAdvanceDesignTests
 {
@@ -17,7 +18,7 @@ namespace CSharpAdvanceDesignTests
 
             void TestDelegate() => JoeyCast<int>(arrayList).ToList();
 
-            Assert.Throws<InvalidCastException>(TestDelegate);
+            Assert.Throws<FishCastException>(TestDelegate);
         }
 
         private IEnumerable<T> JoeyCast<T>(IEnumerable source)
@@ -26,8 +27,19 @@ namespace CSharpAdvanceDesignTests
             while (sourceEnumerator.MoveNext())
             {
                 var current = sourceEnumerator.Current;
-                yield return (T) current;
+                if (current is T newObject)
+                {
+                    yield return newObject;
+                }
+                else
+                {
+                    throw new FishCastException();
+                }
             }
         }
+    }
+
+    internal class FishCastException : Exception
+    {
     }
 }

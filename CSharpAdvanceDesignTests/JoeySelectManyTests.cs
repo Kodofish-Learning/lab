@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using ExpectedObjects;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeySelectManyTests
     {
         [Test]
@@ -18,7 +18,8 @@ namespace CSharpAdvanceDesignTests
                 new City {Name = "新北市", Sections = new List<string> {"三重", "新莊"}},
             };
 
-            var actual = JoeySelectMany(cities);
+            var actual = JoeySelectMany(cities,
+                (current, section) => $"{current.Name}-{section}", city => city.Sections);
 
             var expected = new[]
             {
@@ -32,15 +33,22 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<string> JoeySelectMany(IEnumerable<City> cities)
+        private IEnumerable<string> JoeySelectMany(IEnumerable<City> cities, Func<City, string, string> resultSelector,
+            Func<City, IEnumerable> collectionSelector)
         {
-            throw new System.NotImplementedException();
+            foreach (var city in cities)
+            {
+                foreach (string citySection in collectionSelector(city))
+                {
+                    yield return resultSelector(city, citySection);
+                }
+            }
         }
-    }
 
-    public class City
-    {
-        public string Name { get; set; }
-        public IEnumerable Sections { get; set; }
+        public class City
+        {
+            public string Name { get; set; }
+            public IEnumerable Sections { get; set; }
+        }
     }
 }

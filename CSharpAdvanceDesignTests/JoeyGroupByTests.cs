@@ -2,13 +2,13 @@
 using Lab.Entities;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CSharpAdvanceDesignTests
 {
     [TestFixture]
-    [Ignore("not yet")]
     public class JoeyGroupByTests
     {
         [Test]
@@ -37,7 +37,56 @@ namespace CSharpAdvanceDesignTests
 
         private IEnumerable<IGrouping<string, Employee>> JoeyGroupBy(IEnumerable<Employee> employees)
         {
-            throw new NotImplementedException();
+            var lookup = new Dictionary<string, List<Employee>>();
+            var sourceEnumerator = employees.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                if (lookup.ContainsKey(current.LastName))
+                {
+                    lookup[current.LastName].Add(current);
+                }
+                else
+                {
+                    lookup.Add(current.LastName, new List<Employee>(){current});
+                }
+            }
+
+            return ConvertMultiGroup(lookup);
         }
+
+        private IEnumerable<IGrouping<string, Employee>> ConvertMultiGroup(Dictionary<string, List<Employee>> lookup)
+        {
+            var sourceEnumerator = lookup.GetEnumerator();
+            while (sourceEnumerator.MoveNext())
+            {
+                var current = sourceEnumerator.Current;
+                yield return new MyGroup(current.Key, current.Value);
+            }
+        }
+    }
+
+    internal class MyGroup : IGrouping<string, Employee>
+    {
+        private readonly string _key;
+        private readonly List<Employee> _list;
+
+        public MyGroup(string key, List<Employee> list)
+        {
+            _key = key;
+            _list = list;
+        }
+
+        public IEnumerator<Employee> GetEnumerator()
+        {
+            return _list.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public string Key { get; }
     }
 }

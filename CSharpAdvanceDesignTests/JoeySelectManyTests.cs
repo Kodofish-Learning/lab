@@ -18,8 +18,9 @@ namespace CSharpAdvanceDesignTests
                 new City {Name = "新北市", Sections = new List<string> {"三重", "新莊"}},
             };
 
-            var actual = JoeySelectMany(cities,
-                (current, section) => $"{current.Name}-{section}", city => city.Sections);
+            var actual = JoeySelectMany(cities, 
+                city => city.Sections, 
+                (city, section) => $"{city.Name}-{section}");
 
             var expected = new[]
             {
@@ -33,14 +34,15 @@ namespace CSharpAdvanceDesignTests
             expected.ToExpectedObject().ShouldMatch(actual);
         }
 
-        private IEnumerable<string> JoeySelectMany(IEnumerable<City> cities, Func<City, string, string> resultSelector,
-            Func<City, IEnumerable> collectionSelector)
+        private IEnumerable<TResult> JoeySelectMany<TSource, TResult>(IEnumerable<TSource> sources,
+            Func<TSource, IEnumerable> collectionSelector,
+            Func<TSource, string, TResult> resultSelector)
         {
-            foreach (var city in cities)
+            foreach (var element in sources)
             {
-                foreach (string citySection in collectionSelector(city))
+                foreach (var collection in collectionSelector(element))
                 {
-                    yield return resultSelector(city, citySection);
+                    yield return resultSelector(element, collection.ToString());
                 }
             }
         }
